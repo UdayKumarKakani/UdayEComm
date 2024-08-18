@@ -1,0 +1,62 @@
+@page
+@model ProductModel
+@{
+    ViewData["Title"] = "Home page";
+}
+@{
+    var users = ViewData["weather"] as List<OrderData>;
+}
+<div class="text-center">
+
+    <h1 class="display-5">Products:</h1>
+    <form asp-page-handler="weather" method="post">
+        Product Microservice IP:
+        @if (ViewData["ip"] == null)
+        {
+            <input type="text" name="ip" />
+        }
+        else
+        {
+            <input type="text" name="ip" value="@ViewData["ip"]" />
+        }
+
+        <button>Get Products</button>
+    </form>
+    <br /><br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>ProductName</th>
+            <th>ProductDescription</th>
+            <th>Date</th>
+              <th>Count</th>
+                <th>Cost</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (users != null && users.Any())
+        {
+            foreach (var user in users)
+            {
+                <tr>
+                    <td>@user.ProductName</td>
+                    <td>@user.ProductDescription</td>
+                    <td>@user.Date</td>
+                    <td>@user.Count</td>
+                    <td>@user.Cost</td>
+
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="3">No data available</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+</div>

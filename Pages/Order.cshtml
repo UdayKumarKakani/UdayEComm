@@ -1,0 +1,82 @@
+@page
+
+@model OrderModel
+
+@{
+    ViewData["Title"] = "Home page";
+}
+@{
+    var users = ViewData["weather"] as List<OrderData>;
+}
+<div class="text-center">
+
+    <h1 class="display-5">Orders:</h1>
+    <form asp-page-handler="Weather" method="post">
+        Order Microservice IP:
+        @if (ViewData["ip"] == null)
+        {
+            <input type="text" name="ip" />
+        }
+        else
+        {
+            <input type="text" name="ip" value="@ViewData["ip"]" />
+        }
+
+        <button>Get Orders</button>
+    </form>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ProductName</th>
+            <th>ProductDescription</th>
+            <th>Date</th>
+              <th>Count</th>
+                <th>Cost</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (users != null && users.Any())
+        {
+            foreach (var user in users)
+            {
+                <tr>
+                    <td>@user.ProductName</td>
+                    <td>@user.ProductDescription</td>
+                    <td>@user.Date</td>
+                    <td>@user.Count</td>
+                    <td>@user.Cost</td>
+
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="3">No data available</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+    @* <br /><br />
+    @if (ViewData["weather"] != null)
+    {
+        <p> @ViewData["weather"] </p>
+    }
+    else
+    {
+        if (ViewData["error"] != null)
+        {
+            <p style="color: red;">@ViewData["error"]</p>
+        }
+        else
+        {
+            <p>No Orders data</p>
+        }
+    } *@
+
+</div>
